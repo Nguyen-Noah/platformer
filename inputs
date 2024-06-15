@@ -1,0 +1,4 @@
+move left: a
+move right: d
+jump: space/j
+grab: k
