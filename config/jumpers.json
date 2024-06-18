@@ -1,0 +1,32 @@
+{
+    "madeline": {
+        "max_run_speed": 1.5,
+        "run_accel_amount": 18,
+        "run_deccel_amount": 30,
+        "accel_in_air": 0.5,
+        "decel_in_air": 0.5,
+        "do_conserve_momentum": true,
+        "jump_power": -2,
+        "max_fall_speed": 4,
+        "fall_accel": 6,
+        "grounding_force": 1,
+        "jump_end_early_gravity_modifier": 3,
+        "coyote_time": 0.15,
+        "jump_buffer": 0.2
+    },
+    "FORMAT": {
+        "max_run_speed": "The maximum speed that the player can reach.",
+        "run_accel_amount": "The acceleration constant, or how fast the player will reach top speed while running.",
+        "run_deccel_amount": "The deceleration constant, or how fast the player will slow down while running.",
+        "accel_in_air": "",
+        "decel_in_air": "",
+        "do_conserve_momentum": "",
+        "jump_power": "The immediate velocity applied when jumping.",
+        "max_fall_speed": "The maximum vertical movement speed.",
+        "fall_accel": "The player's capacity to gain fall speed (In Air Gravity).",
+        "grounding_force": "A constant downward force applied when grounded.",
+        "jump_end_early_gravity_modifier": "The gravity multiplier added when jump is released early.",
+        "coyote_time": "The time before coyote jump becomes unusable.",
+        "jump_buffer": "The amount of time we buffer a jump."
+    }
+}

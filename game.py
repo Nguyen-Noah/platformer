@@ -9,7 +9,7 @@ WIDTH = 320
 HEIGHT = 180
 FPS = 60
 dt = 1/FPS
-SCALE_RATIO = 4
+SCALE_RATIO = 6
 BASE_RESOLUTION = (320, 180)
 SCALED_RESOLUTION = (320 * SCALE_RATIO, 180 * SCALE_RATIO)
 
@@ -28,10 +28,11 @@ class Game:
             "down": False
         }
 
-        self.player = Player(self, (100, 100))
+        self.player = Player(self, (100, 0))
         self.floor = pygame.Rect(0, 120, WIDTH, 60)
         self.block = pygame.image.load('assets/temp.png')
         self.tilemap = Tilemap(self)
+        self.tilemap.load('map.json')
 
     def update(self):
         for event in pygame.event.get():
@@ -54,13 +55,13 @@ class Game:
                     self.inputs['left'] = False
                 if event.key == 100:
                     self.inputs['right'] = False
-                if event.key == 119:
+                if event.key == 32:
                     self.inputs['up'] = False
                 if event.key == 115:
                     self.inputs['down'] = False
 
         self.tilemap.render(self.display)
-        self.player.update(dt)
+        self.player.update(self.tilemap, dt)
         self.player.render(self.display)
         #pygame.draw.rect(self.display, 'black', self.floor)
 

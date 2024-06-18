@@ -1,8 +1,0 @@
-{
-    "max_run_speed": 2.25,
-    "run_accel_amount": 13,
-    "run_deccel_amount": 10,
-    "accel_in_air": 0.5,
-    "deccel_in_air": 0.5,
-    "do_conserve_momentum": true
-}

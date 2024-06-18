@@ -2,20 +2,22 @@ import pygame
 from vec2 import vec2
 
 class RigidBody:
-    def __init__(self, pos, width, height, mass=1.0, elasticity=0.8, friction=0.05):
+    def __init__(self, pos, width, height, mass=1.0, friction=0.05):
         self.position = vec2(pos)
         self.velocity = vec2(0, 0)
         self.acceleration = vec2(0, 0)
         self.width = width
         self.height = height
         self.mass = mass
-        self.elasticity = elasticity
         self.friction = friction
-        self.rect = pygame.Rect(pos[0], pos[1], width, height)
 
         # state parameters
         self._is_facing_right = True
         self._last_on_ground_time = 1.0
+
+    
+    def rect(self):
+        return pygame.Rect(self.position.x, self.position.y, self.width, self.height)
     
     def apply_force(self, force):
         self.acceleration += force / self.mass
