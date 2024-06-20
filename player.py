@@ -19,6 +19,7 @@ class Player(RigidBody):
         self.coyote_usable = True
         self.time_jump_was_pressed = 0.0
         self.can_use_coyote = True
+        self.time_left_ground = 0.0
 
         self.has_buffered_jump = False
 
@@ -33,8 +34,8 @@ class Player(RigidBody):
         self.velocity.y = self.data['jump_power']
 
     def handle_jump(self):
+        self.can_use_coyote = self.coyote_usable and not self.grounded and self.time_alive < self.time_left_ground + self.data['coyote_time']
         """ self.has_buffered_jump = self.buffered_jump_usable and self.time_alive < self.time_jump_was_pressed + self.data['jump_buffer']
-        #self.can_use_coyote = self.coyote_usable and not self.grounded and self.time_alive < 
 
         print(self.has_buffered_jump)
 
@@ -110,6 +111,15 @@ class Player(RigidBody):
                     player_rect.top = rect.bottom
                 self.position.y = player_rect.y
 
+        # the frame the player hits the ground
+        if not self.grounded and directions['bottom']:
+            self.time_left_ground = 0.0
+            self.coyote_usable = True
+
+        # the frame the player left the ground
+        if self.grounded and not directions['bottom']:
+            self.time_left_ground = self.time_alive
+
         self.grounded = directions['bottom']
 
     def turn(self):
@@ -138,7 +148,7 @@ class Player(RigidBody):
 
         if self.move_input.x != 0:
             self.check_facing_direction(self.move_input.x > 0)
-        self.debug()
+        #self.debug()
 
     def render(self, surf):
         pygame.draw.rect(surf, 'red', self.rect())
