@@ -45,7 +45,7 @@ class Player(RigidBody):
         if not self.jump_to_consume and not self.has_buffered_jump:
             return """
 
-        if self.game.inputs['up'] and (self.grounded or self.can_use_coyote):
+        if self.game.input.states['jump'] and (self.grounded or self.can_use_coyote):
             self.execute_jump()
         
         self.jump_to_consume = False
@@ -139,9 +139,9 @@ class Player(RigidBody):
         self.move(tilemap)
 
         # CHANGE TO INPUTS MANAGER DONT PUT THIS IN PLAYER CLASS LOL
-        if self.game.inputs['left']:
+        if self.game.input.states['left']:
             self.move_input.x = -1
-        elif self.game.inputs['right']:
+        elif self.game.input.states['right']:
             self.move_input.x = 1
         else:
             self.move_input.x = 0

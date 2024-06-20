@@ -1,0 +1,17 @@
+{
+    "left": {
+        "toggle": "hold",
+        "button": ["keyboard", [97]],
+        "mode": ["core"]
+    },
+    "right": {
+        "toggle": "hold",
+        "button": ["keyboard", [100]],
+        "mode": ["core"]
+    },
+    "jump": {
+        "toggle": "press",
+        "button": ["keyboard", [119, 32]],
+        "mode": ["core"]
+    }
+}

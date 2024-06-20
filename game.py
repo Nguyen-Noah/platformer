@@ -3,6 +3,7 @@ from pygame.locals import *
 from player import Player
 from vec2 import vec2
 from tilemap import Tilemap
+from input import Input
 
 # Constants
 WIDTH = 320
@@ -21,12 +22,7 @@ class Game:
         pygame.display.set_caption('Platformer')
         self.clock = pygame.time.Clock()
 
-        self.inputs = {
-            "left": False,
-            "right": False,
-            "up": False,
-            "down": False
-        }
+        self.input = Input(self)
 
         self.player = Player(self, (100, 0))
         self.floor = pygame.Rect(0, 120, WIDTH, 60)
@@ -35,30 +31,7 @@ class Game:
         self.tilemap.load('map.json')
 
     def update(self):
-        for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == 27):
-                pygame.quit()
-                sys.exit()
-            
-            if event.type == KEYDOWN:
-                if event.key == 97:
-                    self.inputs['left'] = True
-                if event.key == 100:
-                    self.inputs['right'] = True
-                if event.key == 32:
-                    self.inputs['up'] = True
-                if event.key == 115:
-                    self.inputs['down'] = True
-
-            if event.type == KEYUP:
-                if event.key == 97:
-                    self.inputs['left'] = False
-                if event.key == 100:
-                    self.inputs['right'] = False
-                if event.key == 32:
-                    self.inputs['up'] = False
-                if event.key == 115:
-                    self.inputs['down'] = False
+        self.input.update()
 
         self.tilemap.render(self.display)
         self.player.update(self.tilemap, dt)
