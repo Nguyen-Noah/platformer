@@ -2,6 +2,7 @@ import pygame, math
 from vec2 import vec2
 from rigidbody import RigidBody
 from config import config
+from copy import deepcopy
 
 class Player(RigidBody):
     def __init__(self, game, starting_pos):
@@ -28,24 +29,26 @@ class Player(RigidBody):
 
     def execute_jump(self):
         self.ended_jump_early = False
-        self.time_jump_was_pressed = 0.0
+        #self.time_jump_was_pressed = 0.0
         self.buffered_jump_usable = False
         self.coyote_usable = False
         self.velocity.y = self.data['jump_power']
 
     def handle_jump(self):
+        if self.game.input.states['jump']:
+            self.time_jump_was_pressed = deepcopy(self.time_alive)
+
         self.can_use_coyote = self.coyote_usable and not self.grounded and self.time_alive < self.time_left_ground + self.data['coyote_time']
-        """ self.has_buffered_jump = self.buffered_jump_usable and self.time_alive < self.time_jump_was_pressed + self.data['jump_buffer']
+        self.has_buffered_jump = self.buffered_jump_usable and self.time_alive < self.time_jump_was_pressed + self.data['jump_buffer']
 
-        print(self.has_buffered_jump)
 
-        if not self.grounded and not self.ended_jump_early and not self.game.inputs['up'] and self.velocity.y > 0:
+        """ if not self.grounded and not self.ended_jump_early and not self.game.inputs['up'] and self.velocity.y > 0:
             self.ended_jump_early = True
 
         if not self.jump_to_consume and not self.has_buffered_jump:
             return """
 
-        if self.game.input.states['jump'] and (self.grounded or self.can_use_coyote):
+        if self.game.input.states['jump'] and (self.grounded or self.can_use_coyote) or self.has_buffered_jump:
             self.execute_jump()
         
         self.jump_to_consume = False
@@ -115,6 +118,7 @@ class Player(RigidBody):
         if not self.grounded and directions['bottom']:
             self.time_left_ground = 0.0
             self.coyote_usable = True
+            self.buffered_jump_usable = True
 
         # the frame the player left the ground
         if self.grounded and not directions['bottom']:
@@ -131,7 +135,7 @@ class Player(RigidBody):
 
     def update(self, tilemap, dt):
         self.time_alive += dt
-        self.time_jump_was_pressed += dt
+        #self.time_jump_was_pressed += dt
         
         self.handle_run(dt)
         self.handle_gravity(dt)
@@ -148,7 +152,7 @@ class Player(RigidBody):
 
         if self.move_input.x != 0:
             self.check_facing_direction(self.move_input.x > 0)
-        #self.debug()
+        self.debug()
 
     def render(self, surf):
         pygame.draw.rect(surf, 'red', self.rect())

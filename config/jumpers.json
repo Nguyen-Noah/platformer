@@ -12,7 +12,7 @@
         "grounding_force": 1,
         "jump_end_early_gravity_modifier": 3,
         "coyote_time": 0.08,
-        "jump_buffer": 0.2
+        "jump_buffer": 0.08
     },
     "FORMAT": {
         "max_run_speed": "The maximum speed that the player can reach.",
